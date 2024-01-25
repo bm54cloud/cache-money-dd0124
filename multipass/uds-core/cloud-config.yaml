@@ -26,6 +26,7 @@ write_files:
       apt update
       sudo apt install -y docker-ce
       sudo usermod -aG docker ubuntu
+      sysctl --system
     owner: root:root
     permissions: '0o755'
 
