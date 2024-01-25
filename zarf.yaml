@@ -10,12 +10,24 @@ components:
   - name: openvas
     description: "OpenVAS vulnerability scanning tool"
     required: true
-    repos:
-      - 
+
     manifests:
       - name: openvas
         namespace: openvas
         files:
-          - manifests/namespace.yaml
+          - manifests/virtualservice.yaml
+
+    charts:
+      - name: openvas
+        url:  https://github.com/greenbone/openvas-scanner.git
+    # need to check this URL
+        version: v22.7.9
+        namespace: openvas
+        valuesFiles:
+        - values.yaml
+    # line 26 would override any values in the values.yaml found here https://github.com/greenbone/openvas-scanner/blob/main/charts/openvasd/values.yaml
+    # but you would have to create your own values.yaml
     images:
-      - greenbone/openvas-scanner
+      - greenbone/openvas-scanner:latest
+
+

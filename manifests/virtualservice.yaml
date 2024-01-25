@@ -1,0 +1,19 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: openvas
+  namespace: openvas
+spec:
+  hosts:
+    - "openvas.bigbang.dev" 
+  # check on hosts with UDS team
+  gateways:
+    - "istio-system/admin"
+  http:
+    - route:
+        - destination:
+            host: openvasd
+            port:
+              # Make sure this matches listen_port in the Helm values.yaml
+              number: 80
