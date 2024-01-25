@@ -3,7 +3,6 @@ metadata:
   name: openvas
   description: "OpenVAS vulnerability scanning tool"
   architecture: amd64
-  source:
 
 components:
   - name: openvas
