@@ -1,0 +1,21 @@
+kind: ZarfPackageConfig
+metadata:
+  name: openvas
+  description: "OpenVAS vulnerability scanning tool"
+  architecture: amd64
+  version:
+  source:
+
+components:
+  - name: openvas
+    description: "OpenVAS vulnerability scanning tool"
+    required: true
+    repos:
+      - 
+    manifests:
+      - name: openvas
+        namespace: openvas
+        files:
+          - manifests/namespace.yaml
+    images:
+      - 
