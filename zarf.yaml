@@ -3,7 +3,7 @@ metadata:
   name: openvas
   description: "OpenVAS vulnerability scanning tool"
   architecture: amd64
-  version:
+  version: 
   source:
 
 components:
@@ -18,4 +18,4 @@ components:
         files:
           - manifests/namespace.yaml
     images:
-      - 
+      - greenbone/openvas-scanner
