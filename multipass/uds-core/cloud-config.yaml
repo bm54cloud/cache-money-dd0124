@@ -1,0 +1,50 @@
+#cloud-config
+
+write_files:
+  - path: /etc/sysctl.d/99-k8s.conf
+    permissions: '0644'
+    content: |
+      vm.max_map_count=1524288
+      fs.inotify.max_user_instances=8192
+  
+  - path: /etc/security/limits.d/99-k8s.conf
+    permissions: '0644'
+    content: |
+      * hard nofile 1000000
+      * soft nofile 1000000
+      * hard nproc 8192
+      * soft nproc 8192
+
+  - path: /tmp/prereq_install.sh
+    content: |
+      #!/bin/bash
+      set -euox pipefail
+      apt-get update
+      apt install -y build-essential apt-transport-https ca-certificates curl software-properties-common
+      curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+      apt update
+      sudo apt install -y docker-ce
+      sudo usermod -aG docker ubuntu
+    owner: root:root
+    permissions: '0o755'
+
+  - path: /tmp/brew_install.sh
+    content: |
+      #!/bin/bash
+      set -euox pipefail
+      NONINTERACTIVE=1 bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/ubuntu/.bashrc && . /home/ubuntu/.bashrc
+      /home/linuxbrew/.linuxbrew/bin/brew install gcc
+      /home/linuxbrew/.linuxbrew/bin/brew tap defenseunicorns/tap && /home/linuxbrew/.linuxbrew/bin/brew install zarf
+      /home/linuxbrew/.linuxbrew/bin/brew tap defenseunicorns/tap && /home/linuxbrew/.linuxbrew/bin/brew install uds
+      /home/linuxbrew/.linuxbrew/bin/brew install node
+      /home/linuxbrew/.linuxbrew/bin/brew install k3d
+      /home/linuxbrew/.linuxbrew/bin/brew install kubectl
+    owner: root:root
+    permissions: '0o755'
+
+runcmd:
+  - bash -c /tmp/prereq_install.sh | tee /var/log/prereq_install.log
+  - sudo -H -u ubuntu bash -c  '/tmp/brew_install.sh | tee /var/log/brew_install.log'
+    
