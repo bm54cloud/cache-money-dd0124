@@ -11,20 +11,15 @@ components:
 
     manifests:
       - name: openvas
-        namespace: openvas
+        namespace: openvasd
         files:
           - manifests/virtualservice.yaml
 
     charts:
       - name: openvas
-        localPath: charts
+        localPath: charts/openvasd
         version: v22.7.9
-        namespace: openvas
-        valuesFiles:
-        - values.yaml
-    # line 26 would override any values in the values.yaml found here https://github.com/greenbone/openvas-scanner/blob/main/charts/openvasd/values.yaml
-    # but you would have to create your own values.yaml
+        namespace: openvasd
+
     images:
       - greenbone/openvas-scanner:latest
-
-
