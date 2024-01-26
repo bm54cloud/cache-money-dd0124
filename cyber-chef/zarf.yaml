@@ -1,0 +1,25 @@
+kind: ZarfPackageConfig
+metadata:
+  name: cyberchef
+  description: "A simple, intuitive web app for carrying out all manner of 'cyber' operations within a web browser."
+  architecture: amd64
+
+components:
+  - name: cyberchef
+    description: "cyber chef for cyber operations"
+    required: true
+
+    manifests:
+      - name: cyberchef
+        namespace: cyberchef
+        files:
+          - manifests/virtualservice.yaml
+
+    charts:
+      - name: cyberchef
+        url: https://charts.obeone.cloud
+        version: 1.1.11
+        namespace: cyberchef
+
+    images:
+      - obebete/cyberchef:v10.5.2

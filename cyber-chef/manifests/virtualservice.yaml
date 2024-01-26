@@ -1,0 +1,19 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: cyberchef
+  namespace: cyberchef
+spec:
+  hosts:
+    - "cyberchef.uds.dev" 
+  # check on hosts with UDS team
+  gateways:
+    - "istio-admin-gateway/admin"
+  http:
+    - route:
+        - destination:
+            host: cyberchef
+            port:
+              # Make sure this matches listen_port in the Helm values.yaml
+              number: 8000
