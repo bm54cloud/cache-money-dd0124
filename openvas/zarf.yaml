@@ -1,0 +1,25 @@
+kind: ZarfPackageConfig
+metadata:
+  name: openvas
+  description: "OpenVAS vulnerability scanning tool"
+  architecture: amd64
+
+components:
+  - name: openvas
+    description: "OpenVAS vulnerability scanning tool"
+    required: true
+
+    manifests:
+      - name: openvas
+        namespace: openvasd
+        files:
+          - manifests/virtualservice.yaml
+
+    charts:
+      - name: openvas
+        localPath: charts/openvasd
+        version: v22.7.9
+        namespace: openvasd
+
+    images:
+      - greenbone/openvas-scanner:22.7.9
