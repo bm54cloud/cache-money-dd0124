@@ -6,10 +6,10 @@ metadata:
   namespace: cyberchef
 spec:
   hosts:
-    - "cyberchef.uds.dev" 
+    - "cyberchef.admin.uds.dev" 
   # check on hosts with UDS team
   gateways:
-    - "istio-admin-gateway/admin"
+    - "istio-admin-gateway/admin-gateway"
   http:
     - route:
         - destination:
