@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "openvasd.fullname" . }}
   labels:
-    {{- include "openvasd.labels" . | nindent 4 }}
+    {{- include "openvasd.labels" . | nindent 4 }}                                       
 spec:
   replicas: 1 
   selector:

@@ -22,4 +22,4 @@ components:
         namespace: openvasd
 
     images:
-      - greenbone/openvas-scanner:latest
+      - greenbone/openvas-scanner:22.7.9
